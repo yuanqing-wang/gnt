@@ -10,35 +10,35 @@ class Algorithm:
     """
     name: str
     description: str
-    networkx: Callable
+    implementation: Callable
     complexity: Callable = lambda n, e: 0.0,
     
 Diameter = partial(
     Algorithm,
-    name="Diameter",
+    name="diameter",
     description="the longest shortest path between any two nodes",
-    networkx=nx.diameter,
+    implementation=nx.diameter,
 )
 
 NumberConnectedComponents = partial(
     Algorithm,
-    name="NumberConnectedComponents",
+    name="number of connected components",
     description="the number of connected components",
-    networkx=nx.number_connected_components,
+    implementation=nx.number_connected_components,
 )
 
 NodeConnectivity = partial(
     Algorithm,
     name="NodeConnectivity",
     description="Node connectivity is equal to the minimum number of nodes that must be removed to disconnect G or render it trivial.",
-    networkx=nx.node_connectivity,
+    implementation=nx.node_connectivity,
 )
 
 Transitivity = partial(
     Algorithm,
     name="Transitivity",
     description="the transitivity",
-    networkx=nx.transitivity,
+    implementation=nx.transitivity,
 )
     
 
