@@ -1,8 +1,15 @@
 import abc
 from dataclasses import dataclass
-from typing import Callable
+from typing import Callable, Any
 from functools import partial
 import networkx as nx
+
+def _as_str(x: Any):
+    if isinstance(x, int):
+        return str(x)
+    if isinstance(x, float):
+        return f"{x:.2f}"
+    return x
 
 @dataclass
 class Algorithm:
@@ -13,10 +20,13 @@ class Algorithm:
     implementation: Callable
     complexity: Callable = lambda n, e: 0.0,
     
+    def __post_init__(self):
+        self.implementation = lambda g: _as_str(self.implementation(g))
+    
 Diameter = partial(
     Algorithm,
     name="diameter",
-    description="the longest shortest path between any two nodes",
+    description="the length of the longest shortest path between any two nodes",
     implementation=nx.diameter,
 )
 
@@ -41,4 +51,10 @@ Transitivity = partial(
     implementation=nx.transitivity,
 )
     
+AverageDegree = partial(
+    Algorithm,
+    name="average degree",
+    description="the average degree, the number of edges over the number of nodes",
+    implementation=lambda g: g.number_of_edges() / g.number_of_nodes(),
+)
 
