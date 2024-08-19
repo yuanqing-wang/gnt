@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --time=0:59:00
-#SBATCH --mem=64GB
+#SBATCH --mem=32GB
 #SBATCH --job-name=tune
 #SBATCH --output=%A.out
 #SBATCH --gres=gpu:1
@@ -10,4 +10,4 @@
 
 export TRANSFORMERS_CACHE=/scratch/yw8052/hf/
 
-python train.py
+python eval.py

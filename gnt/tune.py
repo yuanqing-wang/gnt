@@ -12,7 +12,7 @@ def tune(model: str, dataset: DataLoader):
     tokenizer.add_special_tokens({'pad_token': '<PAD>'})
 
     def tokenize_function(examples):
-        output = tokenizer(examples["text"], padding="max_length", truncation=True)
+        output = tokenizer(examples["text"], padding="max_length", truncation=True, max_length=64)
         output["labels"] = output["input_ids"]
         return output
 
@@ -20,17 +20,20 @@ def tune(model: str, dataset: DataLoader):
     dataset = dataset.map(tokenize_function, batched=True)
 
     # load the model
-    model = AutoModelForCausalLM.from_pretrained(model)
+    model = AutoModelForCausalLM.from_pretrained(model, load_in_4bit=True)
     model = get_peft_model(model, LoraConfig())
     model.resize_token_embeddings(len(tokenizer))
+    model.print_trainable_parameters()
 
     # define the training arguments
     training_args = TrainingArguments(
         output_dir="./results",
-        per_device_train_batch_size=4,
+        per_device_train_batch_size=1,
+        per_device_eval_batch_size=1,
         max_steps=10000,
         save_total_limit=2,
-        # fp16=True,
+        fp16=True,
+        report_to="none",
     )
 
     trainer = Trainer(

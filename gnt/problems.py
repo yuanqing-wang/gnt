@@ -3,11 +3,10 @@ from typing import Any, Callable
 from .generators import erdos_renyi_graph
 from .generators import describe as describe_generator
 
-GENERAL_INSTRUCTION = """
-Return the answer in [] brackets. 
+GENERAL_INSTRUCTION = """Return the answer in <ANSWER></ANSWER> tags. 
 If the answer is a floating point number, round it to 2 decimal places.
-"""
-    
+""".replace("\n", " ")
+
 def generate_problem(
         graph: nx.Graph,
         algorithm: Callable[[nx.Graph], Any] = None,
