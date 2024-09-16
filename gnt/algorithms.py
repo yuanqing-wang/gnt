@@ -45,15 +45,15 @@ NumberConnectedComponents = partial(
 
 NodeConnectivity = partial(
     Algorithm,
-    name="NodeConnectivity",
-    description="Node connectivity is equal to the minimum number of nodes that must be removed to disconnect G or render it trivial.",
+    name="node connectivity",
+    description="the minimum number of nodes that must be removed to disconnect G or render it trivial.",
     implementation=nx.node_connectivity,
 )
 
 Transitivity = partial(
     Algorithm,
     name="Transitivity",
-    description="the transitivity",
+    description="the probability that the adjacent vertices of a vertex are connected",
     implementation=nx.transitivity,
 )
     

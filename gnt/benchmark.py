@@ -20,5 +20,6 @@ def correct(
 ):
     """Compute the accuracy of the model on a task and an answer. """
     model = get_model(model)
-    answer_hat = model(task)[0]
-    return _correct(answer_hat, answer)
+    answer_hat = model(task)
+    answer_hat = answer_hat[0].outputs[0].text
+    return answer_hat, _correct(answer_hat, answer)
