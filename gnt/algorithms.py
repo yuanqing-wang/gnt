@@ -64,3 +64,18 @@ AverageDegree = partial(
     implementation=lambda g: g.number_of_edges() / g.number_of_nodes(),
 )
 
+
+def _largest_cycle(g):
+    cycles = sorted(list(nx.simple_cycles(g)), key = lambda s: len(s))
+    if len(cycles) == 0:
+        return 0
+    return len(cycles[-1])
+    
+
+LargestCycle = partial(
+    Algorithm,
+    name="largest cycle",
+    description="the length of the longest cycle in the graph",
+    implementation=lambda g: _largest_cycle(g),
+)
+
